@@ -72,8 +72,8 @@ class Student
 
   def update
     if saved?
-      sql = "UPDATE dogs SET name = ?, color = ?, bio = ? WHERE id = ?"
-      @@db.execute(sql, self.name, self.color, self.bio, self.id)
+      sql = "UPDATE students SET name = ? WHERE id = ?"
+      @@db.execute(sql, self.name, self.id)
     end
   end
 
@@ -92,5 +92,5 @@ class Student
     results = @@db.execute(find, self.name)
     @id = results.flatten.first
   end
-  
+
 end
