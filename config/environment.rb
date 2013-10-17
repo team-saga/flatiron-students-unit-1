@@ -4,5 +4,7 @@ require 'pry'
 require 'sqlite3'
 require 'faker'
 require 'erb'
+
+
 require_relative '../lib/models/scraper'
 require_relative '../lib/models/student'
