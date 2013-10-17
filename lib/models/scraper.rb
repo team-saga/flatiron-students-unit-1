@@ -1,5 +1,3 @@
-require_relative '../../config/environment.rb'
-
 class Scraper
   attr_accessor :url, :name, :image, :quote, :cities, :bio, :personal_projects
 
