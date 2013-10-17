@@ -4,16 +4,20 @@ main_page = Nokogiri::HTML(open('http://students.flatironschool.com/'))
 students_list = main_page.css('.home-blog ul')
 student_list_item = students_list.css('.blog-thumb a')
 links_to_crawl = student_list_item.map { |i| i.attributes["href"].value  }
-urlmap = links_to_crawl.map { |link| "http://students.flatironschool.com/" + link  }
+student_images = main_page.css('.home-blog .blog-thumb .prof-image')
+student_names = main_page.css('.home-blog .blog-title .big-comment h3 a').text
 
+urlmap = links_to_crawl.map { |link| "http://students.flatironschool.com/" + link  }
 urlmap[5]="http://students.flatironschool.com/students/stephanie_oh.html"
 urlmap.delete_at(28)
 urlmap.delete_at(5)
 urlmap.delete_at(4)
 
+
 #Methods to make:
-#1. Student Image returns a string like 
+#1. Student Image returns a string like
 #=> "../img/students/vivian_icon.png"
+
 #=> Use a Regex or build a method to make this a relative URL
 
 #2. Normalize Student Quote. Quote curreny looks like: 
@@ -27,7 +31,7 @@ def crawl_page(student_page)
   #All paths should have a url.css() call in them to work properly
 
   #get name, image, quote
-  name = url.css('.ib_main_header').children[0].text || "name"
+  #name = url.css('.ib_main_header').children[0].text || "name"
   image = url.css('.student_pic').first.attributes["src"].value || "image"
   quote = url.css('.textwidget h3')[0].children.text.strip || "quote"
 
@@ -93,7 +97,7 @@ end
 
 
 
-test = urlmap.map do |site|
-  crawl_page(site)
-end
-puts test.join.inspect
+# test = urlmap.map do |site|
+#   crawl_page(site)
+# end
+#puts test.join.inspect
