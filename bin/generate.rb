@@ -18,4 +18,57 @@ class SiteGenerator
   end
 
 
+  @@student_names = [
+  "Alex Chiu",
+  "Amanda Himmelstoss",
+  "Anders Ramsay",
+  "Bana Malik",
+  "Brendan Manley",
+  "Charlotte Chang",
+  "Christopher Lee",
+  "Daniel Chang",
+  "David Bella",
+  "Edina Vath",
+  "Emily Xie",
+  "Greg Eng",
+  "Ian Miller",
+  "Iris Lee",
+  "Ivan Brennan",
+  "James Tong",
+  "Jeanne Roniger",
+  "Joe O'Conor",
+  "John Richardson",
+  "Joshua Scaglione",
+  "Kyle Shike",
+  "Logan Hasson",
+  "Manuel Neuhauser",
+  "Margaret Lee",
+  "Matt Campbell",
+  "Michael Polycarpou",
+  "Mike Spangler",
+  "Raymond Gan",
+  "Rosanne Hoyem",
+  "Sam Yang",
+  "Samuel Owens",
+  "Saron Yitbarek",
+  "Scott Luptowski",
+  "Vivian Zhang",
+  "Sonja Hall",
+  "Stephanie Oh",
+  "Theo Vora",
+  "Thomas Surgent",
+  "Tiffany Peon",
+  "Trevor McKendrick",
+  "Vinney Cavallo"
+  ]
+
+  Student.create_table
+
+  @@student_names.each do |x|
+    Student.new.tap do |s|
+      s.name = x
+      s.save
+    end
+  end
+
 end
