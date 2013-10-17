@@ -1,10 +1,19 @@
+require_relative '../../config/environment.rb'
+
 class Scraper
-  attr_accessor :url, :name, :image, :quote, :cities, :bio, :personal_projects
+  attr_accessor :url, :name, :image, :quote, :cities, :bio, :personal_projects, :links_to_crawl, :student_list_item, :css_test
 
   def initialize(scrape_source)
+    @scrape_source = scrape_source
     @scraped_content = Nokogiri::HTML(open(scrape_source))
     @students_hash = {}
     @social_media_array = []
+  end
+
+  def explore
+    puts "Please enter css test path:"
+    css_test = gets.chomp
+    puts @scraped_content.css(css_test)
   end
 
   def crawl_student_pages(student_page)
@@ -22,13 +31,14 @@ class Scraper
   end
 
   def get_student_names
-    name = url.css('.ib_main_header').children[0].text || "name"
+    name = @url.css('.ib_main_header').children[0].text || "name"
     # student_names = @scraped_content.css('.home-blog .blog-title .big-comment h3 a').text
   end
 
   def get_links_to_student_pages
-    urlmap = links_to_crawl.map { |link| "http://students.flatironschool.com/" + link  }
-    links_to_crawl = student_list_item.map { |i| i.attributes["href"].value  }
+    student_page_links = @scraped_content.css('.blog-thumb a').collect do |link|
+      "http://students.flatironschool.com/" + link["href"]
+    end
   end
 
   def get_student_quotes
@@ -76,6 +86,9 @@ class Scraper
     db.execute( "insert into student values ( ?, ?,?,? )", 
     *student_name,*image,*quote, *biography )
   end
- 
-
 end
+
+scraper = Scraper.new('http://students.flatironschool.com')
+scraper.get_links_to_student_pages
+
+binding.pry
