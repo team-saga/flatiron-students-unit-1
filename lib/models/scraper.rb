@@ -31,13 +31,7 @@ def crawl_page(student_page)
    
   social_media_array = social_media_array.uniq || "social media"
 
-  # [name,image,quote,cities,social_media_array, biography].inspect
-
-  add_to_db
-end
-
-def add_to_db
-    db = SQLite3::Database.new( "test.db" )
+  db = SQLite3::Database.new( "test.db" )
   db.execute(" create table if not exists student (
   name varchar2(30),
   image varchar2(30),
