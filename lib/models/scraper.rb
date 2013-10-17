@@ -1,3 +1,5 @@
+require '../../config/environment'
+
 class Scraper
   attr_accessor :url, :name, :image, :quote, :cities, :bio, :personal_projects
 
@@ -34,7 +36,7 @@ class Scraper
   def get_student_quotes
     quote = url.css('.textwidget h3')[0].children.text.strip || "quote"
   end
-  
+
   def get_student_cities
     cities =  url.css('h3')[-3].parent.parent.children[5].children.map { |city| city.text.strip || "cities" }.reject(&:empty?)
   end
@@ -49,7 +51,7 @@ class Scraper
 
   def get_coder_cred
     url.css(".coder-cred a").each do |instance|
-      social_media_array << instance.attributes["href"].value 
+      social_media_array << instance.attributes["href"].value
     end
   end
 
@@ -60,7 +62,7 @@ class Scraper
   end
 
   def get_social_media
-    social_media_array = social_media_array.uniq || "social media"    
+    social_media_array = social_media_array.uniq || "social media"
   end
 
   def add_to_db
@@ -71,11 +73,15 @@ class Scraper
     quote text,
     biography text
     )
-    ;") 
+    ;")
 
-    db.execute( "insert into student values ( ?, ?,?,? )", 
+    db.execute( "insert into student values ( ?, ?,?,? )",
     *student_name,*image,*quote, *biography )
   end
- 
+ end
 
-end
+scraper = Scraper.new
+scraper("http://students.flatironschool.com")
+
+ binding.pry
+

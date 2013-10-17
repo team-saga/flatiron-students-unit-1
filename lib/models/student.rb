@@ -17,7 +17,8 @@ class Student
     sql = <<-SQL
       CREATE TABLE IF NOT EXISTS students (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT
+        name TEXT,
+        image TEXT
       );
     SQL
 
@@ -54,6 +55,7 @@ class Student
     s = Student.new
     s.id = row[0]
     s.name = row[1]
+    s.image = row[2]
     s.saved!
     s
   end
@@ -85,12 +87,12 @@ class Student
   end
 
   def insert
-    sql = "INSERT INTO students (name) VALUES (?)"
-    @@db.execute(sql, self.name)
+    sql = "INSERT INTO students (name, image) VALUES (?, ?)"
+    @@db.execute(sql, self.name, self.image)
     saved!
     find = "SELECT id FROM students WHERE name = ? ORDER BY id DESC LIMIT 1"
     results = @@db.execute(find, self.name)
     @id = results.flatten.first
   end
-  
+
 end
