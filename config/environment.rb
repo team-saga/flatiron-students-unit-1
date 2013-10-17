@@ -9,3 +9,7 @@ Dir.foreach('lib') do |file|
   require_relative '../lib/""' if file.end_with?('.rb')
 end
 
+require_relative '../lib/models/student.rb'
+require_relative '../lib/models/scraper.rb'
+
+
